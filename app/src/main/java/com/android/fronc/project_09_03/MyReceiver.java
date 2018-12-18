@@ -4,39 +4,30 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.widget.Toast;
 
 public class MyReceiver extends BroadcastReceiver {
 
-    private Handler handler = new Handler();
-
     @Override
     public void onReceive(final Context context, Intent intent) {
+        int resultCode = getResultCode();
+        String resultData = getResultData();
+        Bundle resultExtras = getResultExtras(true);
+        String stringExtra = resultExtras.getString("stringExtra");
 
-        if ("com.android.fronc.project_09_01".equals(intent.getAction())) {
-            String message = intent.getStringExtra("com.android.fronc.project_09_01.EXTRA_MESSAGE_TEXT");
-            Toast.makeText(context, "Broadcast detected Project_09_03 (" + message + ")", Toast.LENGTH_LONG).show();
+        resultCode++;
+        stringExtra += "->OR3";
 
-            if (message.equals("sendBroadcastOrdered")) {
-                Bundle results = getResultExtras(true);
-                final String initialString = results.getString("INITIAL_STRING");
+        String toastText = "OR3\n" +
+                "resultCode: " + resultCode + "\n" +
+                "resultData: " + resultData + "\n" +
+                "stringExtra: " + stringExtra;
 
-                handler.postDelayed(new Runnable() {
-                    public void run() {
-                        Toast.makeText(context, "Initial extras: " + initialString, Toast.LENGTH_LONG).show();
-                    }
-                }, 24000);
+        Toast.makeText(context, toastText, Toast.LENGTH_LONG).show();
 
-                final String feedbackString = initialString + "Project_09_03;";
-                results.putString("FEEDBACK_STRING", feedbackString);
+        resultData = "OR3";
+        resultExtras.putString("stringExtra", stringExtra);
 
-                handler.postDelayed(new Runnable() {
-                    public void run() {
-                        Toast.makeText(context, "Send feedback string: " + feedbackString, Toast.LENGTH_LONG).show();
-                    }
-                }, 32000);
-            }
-        }
+        setResult(resultCode, resultData, resultExtras);
     }
 }

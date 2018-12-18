@@ -16,11 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver
-            android:name=".MyReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter android:priority="2">
+        <receiver android:name=".MyReceiver">
+            <intent-filter android:priority="3">
                 <action android:name="com.android.fronc.project_09_01" />
             </intent-filter>
         </receiver>
