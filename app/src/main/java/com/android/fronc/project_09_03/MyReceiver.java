@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.Toast;
 
 public class MyReceiver extends BroadcastReceiver {
@@ -18,12 +19,17 @@ public class MyReceiver extends BroadcastReceiver {
         resultCode++;
         stringExtra += "->OR3";
 
-        String toastText = "OR3\n" +
+        final String toastText = "OR3\n" +
                 "resultCode: " + resultCode + "\n" +
                 "resultData: " + resultData + "\n" +
                 "stringExtra: " + stringExtra;
 
-        Toast.makeText(context, toastText, Toast.LENGTH_LONG).show();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                Toast.makeText(context, toastText, Toast.LENGTH_LONG).show();
+            }
+        }, 4000);
 
         resultData = "OR3";
         resultExtras.putString("stringExtra", stringExtra);
